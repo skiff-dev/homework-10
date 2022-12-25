@@ -23,7 +23,10 @@ class Record:
             self.phones.append(phone)
 
     def add_phone(self, phone):
-        self.phones.append(phone)
+        new_phone = ''
+        for i in filter(lambda x: x.isnumeric(), phone):
+            new_phone += i
+        self.phones.append(new_phone)
 
     def delete_phone(self, phone):
         self.phones.remove(phone)
@@ -35,19 +38,3 @@ class Record:
 class AddressBook(UserDict):
     def add_record(self, record):
         self.data[record.name.value] = record
-
-
-if __name__ == '__main__':
-    name = Name('Bill')
-    phone = Phone('1234567890')
-    rec = Record(name, phone)
-    ab = AddressBook()
-    ab.add_record(rec)
-
-    assert isinstance(ab['Bill'], Record)
-    assert isinstance(ab['Bill'].name, Name)
-    assert isinstance(ab['Bill'].phones, list)
-    assert isinstance(ab['Bill'].phones[0], Phone)
-    assert ab['Bill'].phones[0].value == '1234567890'
-
-    print('All Ok)')
